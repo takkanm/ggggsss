@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'ggggsss'
+command = Ggggsss::Command.new(ARGV)
+command.execute!
