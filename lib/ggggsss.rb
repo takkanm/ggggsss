@@ -11,6 +11,7 @@ module Ggggsss
       @bucket_name = ''
       opt_parser = OptionParser.new
       opt_parser.on('-b BUCKET_NAME', '--bucket-name BUCKET_NAME') {|name| @bucket_name = name }
+      opt_parser.banner += ' KEYWORD PATH_PREFIX'
 
       opt_parser.parse!(args)
 
