@@ -9,9 +9,9 @@ RSpec.describe Ggggsss::LineCollector do
     let(:keyword) { 'BBB' }
     let(:expect_results) {
       [
-        {line_no: 1, line: 'AAABBBCCC'},
-        {line_no: 2, line: 'BBBCCCDDD'},
-        {line_no: 5, line: 'BBB'}
+        Ggggsss::ResultLine.new(line_no: 1, line: 'AAABBBCCC'),
+        Ggggsss::ResultLine.new(line_no: 2, line: 'BBBCCCDDD'),
+        Ggggsss::ResultLine.new(line_no: 5, line: 'BBB')
       ]
     }
 

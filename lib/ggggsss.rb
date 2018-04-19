@@ -16,6 +16,19 @@ module Ggggsss
     end
   end
 
+  class ResultLine
+    attr_reader :line_no, :line
+
+    def initialize(line_no:, line:)
+      @line_no = line_no
+      @line = line
+    end
+
+    def ==(others)
+      line_no == others.line_no && line == others.line
+    end
+  end
+
   class LineCollector
     attr_reader :results
 
@@ -27,7 +40,7 @@ module Ggggsss
 
     def collect!
       @io.read.each_line.with_index(1) do |line, line_no|
-        @results << {line_no: line_no, line: line.chomp} if @keyword.match?(line)
+        @results << ResultLine.new(line_no: line_no, line: line.chomp) if @keyword.match?(line)
       end
     end
   end
