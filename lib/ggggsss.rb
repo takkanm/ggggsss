@@ -1,6 +1,8 @@
 require 'optparse'
 require "ggggsss/version"
 
+require 'aws-sdk-s3'
+
 module Ggggsss
   class Command
     attr_reader :bucket_name, :keyword, :path
@@ -13,6 +15,34 @@ module Ggggsss
       opt_parser.parse!(args)
 
       @keyword, @path = *args
+    end
+  end
+
+  class S3Object
+    attr_reader :key, :body
+
+    def initialize(key:, body:)
+      @key = key
+      @body = body
+    end
+  end
+
+  class S3Fetcher
+    attr_reader :objects
+
+    def initialize(bucket_name, path)
+      @bucket_name = bucket_name
+      @path = path
+      @objects = []
+    end
+
+    def fetch!
+      s3 = Aws::S3::Resource.new
+      bucket = s3.bucket(@bucket_name)
+      bucket.objects(prefix: path).each do |object_summary|
+        object_output = object_summary.get
+        @objects << S3Object.new(key: object_summary.key, body: object_output.body)
+      end
     end
   end
 
