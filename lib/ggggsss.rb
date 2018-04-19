@@ -16,6 +16,19 @@ module Ggggsss
 
       @keyword, @path = *args
     end
+
+    def execute!
+      fetcher = S3Fetcher.new(@bucket_name, @path)
+      fetcher.fetch!
+
+      fetcher.objects.each do |s3_object|
+        collector = LineCollector.new(s3_object.body, @keyword)
+        collector.collect!
+
+        printer = ResultPrinter.new(s3_object.key, collector.results)
+        printer.print
+      end
+    end
   end
 
   class S3Object
