@@ -27,6 +27,8 @@ module Ggggsss
 
         printer = ResultPrinter.new(s3_object.key, collector.results)
         printer.print
+      rescue => e
+        puts "#{s3_object.key}: #{e.message}"
       end
     end
   end
