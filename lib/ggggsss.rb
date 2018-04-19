@@ -15,4 +15,20 @@ module Ggggsss
       @keyword, @path = *args
     end
   end
+
+  class LineCollector
+    attr_reader :results
+
+    def initialize(io, keyword)
+      @io = io
+      @keyword = Regexp.new(keyword)
+      @results = []
+    end
+
+    def collect!
+      @io.read.each_line.with_index(1) do |line, line_no|
+        @results << {line_no: line_no, line: line.chomp} if @keyword.match?(line)
+      end
+    end
+  end
 end
