@@ -52,7 +52,7 @@ module Ggggsss
     def fetch!
       s3 = Aws::S3::Resource.new
       bucket = s3.bucket(@bucket_name)
-      bucket.objects(prefix: path).each do |object_summary|
+      bucket.objects(prefix: @path).each do |object_summary|
         object_output = object_summary.get
         @objects << S3Object.new(key: object_summary.key, body: object_output.body)
       end
@@ -96,7 +96,7 @@ module Ggggsss
 
     def print
       @results.each do |result|
-        puts "#{filename}:#{result.line_no}:#{result.line}"
+        puts "#{@filename}:#{result.line_no}:#{result.line}"
       end
     end
   end
