@@ -44,4 +44,17 @@ module Ggggsss
       end
     end
   end
+
+  class ResultPrinter
+    def initialize(filename, results)
+      @filename = filename
+      @results = results
+    end
+
+    def print
+      @results.each do |result|
+        puts "#{filename}:#{result.line_no}:#{result.line}"
+      end
+    end
+  end
 end
