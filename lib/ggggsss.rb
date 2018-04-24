@@ -9,11 +9,16 @@ module Ggggsss
 
     def initialize(args)
       @bucket_name = ''
+      @profile_name = nil
+
       opt_parser = OptionParser.new
       opt_parser.on('-b BUCKET_NAME', '--bucket-name BUCKET_NAME') {|name| @bucket_name = name }
+      opt_parser.on('--profile PROFILE_NAME') {|profile_name| @profile_name = profile_name }
       opt_parser.banner += ' KEYWORD PATH_PREFIX'
 
       opt_parser.parse!(args)
+
+      Aws.config[:credentials] = Aws::SharedCredentials.new(profile_name: @profile_name) if @profile_name
 
       @keyword, @path = *args
     end
